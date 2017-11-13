@@ -1,6 +1,6 @@
 export const COLOURS = ['red', 'green', 'blue', 'yellow'];
-const MAX_X = 10;
-const MAX_Y = 10;
+export const MAX_X = 10;
+export const MAX_Y = 10;
 
 export class Block {
   constructor(x, y) {
