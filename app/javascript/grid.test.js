@@ -1,4 +1,4 @@
-import { Block, block_grid, COLOURS } from './grid';
+import { Block, BlockGrid, COLOURS, MAX_X, MAX_Y} from './grid';
 import { assert } from 'chai';
 
 describe('Block', () => {
@@ -104,16 +104,28 @@ describe('Block.paint', () => {
   });
 });
 
-describe('block_grid', () => {
-  xit('should be implemented!', () => {});
+describe('BlockGrid', () => {
+  it('should be created with correct boundaries', () => {
+    //ARRANGE
+    let testCoords = [[1, 2], [4, 9], [0, 0]];
+    //ACT/ASSERT 
+    testCoords.forEach(testCoord => {
+      let block_grid = new BlockGrid(...testCoord);
+      assert.equal(block_grid.max_x, testCoord[0], 'max_x is set correctly');
+      assert.equal(block_grid.max_y, testCoord[1], 'max_y is set correctly');
+    });
+    let block_grid = new BlockGrid();
+    assert.equal(block_grid.max_x, MAX_X, 'max_x is set correctly');
+    assert.equal(block_grid.max_y, MAX_Y, 'max_y is set correctly');
+  });
 });
 
-describe('block_grid.coordinatesWithinBoundaries', () => {
+describe('BlockGrid.coordinatesWithinBoundaries', () => {
   it('should be true for within boundaries, false for outside', () => {
     // ARRANGE
     let test_coords_within_boundaries = [[1, 2], [4, 9], [0, 0]];
     let test_coords_outside_of_boundaries = [[-1, 2], [14, 9], [-1, -1]];
-    let block_grid = new block_grid();
+    let block_grid = new BlockGrid();
     
     // ACT/ASSERT
     test_coords_within_boundaries.forEach(testCoord => {
@@ -126,10 +138,10 @@ describe('block_grid.coordinatesWithinBoundaries', () => {
   });
 });
 
-describe('block_grid.connectedBlocks', () => {
+describe('BlockGrid.connectedBlocks', () => {
   it('should return connected blocks', () => {
     // ARRANGE
-    let block_grid = new block_grid(2, 2);
+    let block_grid = new BlockGrid(2, 2);
     
     let block_yellow = new Block(0, 0);
     block_yellow.colour = 'yellow';
@@ -151,10 +163,10 @@ describe('block_grid.connectedBlocks', () => {
   });
 });
 
-describe('block_grid.greyOutConnectedBlocks', () => {
+describe('BlockGrid.greyOutConnectedBlocks', () => {
   it('should return connected blocks', () => {
     // ARRANGE
-    let block_grid = new block_grid(2, 2);
+    let block_grid = new BlockGrid(2, 2);
     
     let block_yellow = new Block(0, 0);
     block_yellow.colour = 'yellow';
@@ -187,10 +199,10 @@ describe('block_grid.greyOutConnectedBlocks', () => {
   });
 });
 
-describe('block_grid.fallDownBlocks', () => {
+describe('BlockGrid.fallDownBlocks', () => {
   it('should rearrange blocks', () => {
     // ARRANGE
-    let block_grid = new block_grid(1, 2);
+    let block_grid = new BlockGrid(1, 2);
     
     let block_bottom_before = new Block(0, 0);
     block_bottom_before.colour = 'grey';
